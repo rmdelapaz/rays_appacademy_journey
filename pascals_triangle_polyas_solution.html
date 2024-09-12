@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pascal's Triangle Solution (Polya's 4 Steps)</title>
+</head>
+<body>
+    <h1>Pascal's Triangle Solution (Polya's 4-Step Approach)</h1>
+
+    <p><strong>Problem:</strong> Pascal's triangle is a 2-dimensional array with the shape of a pyramid. The top of the pyramid is the number 1. To generate further levels of the pyramid, every element is the sum of the element above and to the left with the element above and to the right. Non-existing elements are treated as 0 when calculating the sum.</p>
+
+    <p><strong>Task:</strong> Write a function <code>pascalsTriangle</code> that accepts a positive number <code>n</code> and returns a 2-dimensional array representing the first <code>n</code> levels of Pascal's triangle.</p>
+
+    <h2>Polya's Four Steps to Problem Solving:</h2>
+
+    <h3>Step 1: Understand the Problem</h3>
+    <p>We need to generate the first <code>n</code> rows of Pascal's triangle. Each row starts and ends with 1, and every other element in the row is the sum of the two elements directly above it (the one to the left and the one to the right). For non-existing elements (outside the triangle), we treat them as 0.</p>
+
+    <h3>Step 2: Devise a Plan</h3>
+    <p>The plan is to use a loop to build each row of the triangle. Start with the first row as <code>[1]</code>. For each subsequent row, calculate the new values by summing appropriate elements from the previous row. Add 0 where necessary for non-existing elements.</p>
+
+    <ul>
+        <li>Create an empty array to store the triangle.</li>
+        <li>Start with the first row as <code>[1]</code>.</li>
+        <li>For each subsequent row, initialize the first and last elements as 1.</li>
+        <li>For the elements in between, calculate their value by summing the two elements from the row above (one to the left and one to the right).</li>
+        <li>Repeat the process until we generate <code>n</code> rows.</li>
+        <li>Return the 2D array representing the triangle.</li>
+    </ul>
+
+    <h3>Step 3: Carry Out the Plan (Code)</h3>
+    <pre><code>
+// Main function to generate Pascal's Triangle
+function pascalsTriangle(n) {
+    // Step 1: Initialize an empty array to hold the triangle
+    let triangle = [];
+
+    // Step 2: Loop through each row
+    for (let i = 0; i < n; i++) {
+        let row = [1];  // Each row starts with 1
+
+        // Step 3: For rows with more than one element, calculate values
+        for (let j = 1; j < i; j++) {
+            // Current element is the sum of the two elements from the previous row
+            row[j] = triangle[i - 1][j - 1] + triangle[i - 1][j];
+        }
+
+        // Step 4: End the row with 1 if it's not the first row
+        if (i > 0) row.push(1);
+
+        // Add the current row to the triangle
+        triangle.push(row);
+    }
+
+    // Return the final 2D array representing Pascal's triangle
+    return triangle;
+}
+
+// Test cases
+console.log(pascalsTriangle(1)); // [[1]]
+console.log(pascalsTriangle(3)); // [[1], [1, 1], [1, 2, 1]]
+console.log(pascalsTriangle(5)); // [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]
+</code></pre>
+
+    <h3>Step 4: Review the Solution</h3>
+    <p>By running our test cases, we verify that the function works as expected. The triangle is built correctly by following the rule that each element is the sum of the two elements directly above it. Edge cases like <code>n = 1</code> are handled, and larger values of <code>n</code> produce the correct triangular structure.</p>
+
+    <h2>Test Cases:</h2>
+    <ul>
+        <li><code>pascalsTriangle(1)</code> returns <strong>[[1]]</strong>.</li>
+        <li><code>pascalsTriangle(3)</code> returns <strong>[[1], [1, 1], [1, 2, 1]]</strong>.</li>
+        <li><code>pascalsTriangle(5)</code> returns <strong>[[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]</strong>.</li>
+    </ul>
+
+    <h2>Conclusion:</h2>
+    <p>By applying Polya's 4-step method, we broke the problem down into manageable parts, developed a plan, and successfully implemented a solution to generate Pascal's Triangle. We reviewed the solution through test cases to ensure its correctness.</p>
+</body>
+</html>
