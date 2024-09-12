@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>JavaScript Problem: mostVowels Solution (Polya's 4 Steps)</title>
+</head>
+<body>
+    <h1>JavaScript Problem: mostVowels (Polya's 4-Step Approach)</h1>
+
+    <p><strong>Problem:</strong> Write a function <code>mostVowels</code> that takes in a sentence string and returns the word of the sentence that contains the most vowels. Vowels are the letters "a", "e", "i", "o", "u".</p>
+
+    <h2>Polya's Four Steps to Problem Solving:</h2>
+    <p>George Polya’s approach to problem-solving involves four key steps: understanding the problem, devising a plan, carrying out the plan, and looking back (reviewing the solution).</p>
+
+    <h3>Step 1: Understand the Problem</h3>
+    <p>We need to find the word in a given sentence that contains the most vowels. Vowels include "a", "e", "i", "o", "u". If multiple words have the same number of vowels, we return the first one. If the sentence is empty, we return an empty string.</p>
+
+    <h3>Step 2: Devise a Plan</h3>
+    <p>The idea is to split the sentence into words, then for each word, count how many vowels it contains. We'll keep track of the word with the most vowels as we iterate through the sentence.</p>
+    <ul>
+        <li>Create a helper function to count vowels in a word.</li>
+        <li>Split the sentence into individual words.</li>
+        <li>Iterate through the words and count the vowels in each one.</li>
+        <li>Track the word with the highest vowel count.</li>
+        <li>Return the word with the most vowels.</li>
+    </ul>
+
+    <h3>Step 3: Carry Out the Plan (Code)</h3>
+    <pre><code>
+// Step 1: Helper function to count vowels in a word
+function countVowels(word) {
+    const vowels = "aeiouAEIOU";
+    let count = 0;
+    for (let char of word) {
+        if (vowels.includes(char)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Step 2: Main function to find the word with the most vowels
+function mostVowels(sentence) {
+    if (!sentence) return "";  // If the sentence is empty, return an empty string
+
+    let words = sentence.split(" ");  // Split the sentence into words
+    let maxVowelWord = "";            // Variable to track the word with the most vowels
+    let maxVowelCount = 0;            // Variable to track the maximum vowel count
+
+    // Step 3: Iterate through each word in the sentence
+    for (let word of words) {
+        let vowelCount = countVowels(word);  // Count the vowels in the current word
+
+        // Step 4: Update the word with the most vowels if the count is higher
+        if (vowelCount > maxVowelCount) {
+            maxVowelWord = word;
+            maxVowelCount = vowelCount;
+        }
+    }
+
+    return maxVowelWord;  // Return the word with the most vowels
+}
+
+// Test cases
+console.log(mostVowels("what a wonderful life")); // "wonderful"
+console.log(mostVowels("the quick brown fox jumps")); // "quick"
+console.log(mostVowels("")); // ""
+</code></pre>
+
+    <h3>Step 4: Review the Solution</h3>
+    <p>Our solution works as intended. The function successfully returns the word with the most vowels. We tested it with different cases, including an empty string, and the function handles them correctly.</p>
+    <p>By reviewing the code, we could also consider optimizing the solution or adding more test cases for edge scenarios. However, the current approach follows Polya's methodology well and provides the correct solution.</p>
+
+    <h2>Test Cases:</h2>
+    <ul>
+        <li><code>mostVowels("what a wonderful life")</code> returns <strong>"wonderful"</strong> because it contains 3 vowels.</li>
+        <li><code>mostVowels("the quick brown fox jumps")</code> returns <strong>"quick"</strong> because it contains 2 vowels.</li>
+        <li><code>mostVowels("")</code> returns <strong>""</strong> because the input sentence is empty.</li>
+    </ul>
+
+    <h2>Conclusion:</h2>
+    <p>By following George Polya's four-step problem-solving approach, we broke the problem into manageable steps and developed a working solution. The function identifies the word with the most vowels in a sentence, and handles various scenarios effectively.</p>
+</body>
+</html>

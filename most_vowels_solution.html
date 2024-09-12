@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>JavaScript Problem: mostVowels Solution</title>
+</head>
+<body>
+    <h1>JavaScript Problem: mostVowels</h1>
+
+    <p><strong>Problem:</strong> Write a function <code>mostVowels</code> that takes in a sentence string and returns the word of the sentence that contains the most vowels. Vowels are the letters "a", "e", "i", "o", "u".</p>
+
+    <h2>Pseudo Code:</h2>
+    <ol>
+        <li>Define the function <code>mostVowels</code> that takes a sentence as an argument.</li>
+        <li>Initialize a variable to track the word with the most vowels.</li>
+        <li>Initialize a helper function to count vowels in a word.</li>
+        <li>Split the sentence into words.</li>
+        <li>Iterate through the words, using the helper function to count the vowels in each word.</li>
+        <li>Keep track of the word with the highest vowel count.</li>
+        <li>Return the word with the most vowels.</li>
+    </ol>
+
+    <h2>Step-by-Step Solution:</h2>
+    <pre><code>
+// Helper function to count vowels in a word
+function countVowels(word) {
+    const vowels = "aeiouAEIOU";
+    let count = 0;
+    for (let char of word) {
+        if (vowels.includes(char)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Main function to find the word with the most vowels
+function mostVowels(sentence) {
+    if (!sentence) return ""; // If the sentence is empty, return an empty string
+
+    let words = sentence.split(" ");  // Split the sentence into words
+    let maxVowelWord = "";            // Track the word with the most vowels
+    let maxVowelCount = 0;            // Track the highest vowel count
+
+    // Iterate through each word in the sentence
+    for (let word of words) {
+        let vowelCount = countVowels(word);  // Count the vowels in the current word
+
+        // Check if this word has more vowels than the current max
+        if (vowelCount > maxVowelCount) {
+            maxVowelWord = word;
+            maxVowelCount = vowelCount;
+        }
+    }
+
+    return maxVowelWord;  // Return the word with the most vowels
+}
+
+// Test cases
+console.log(mostVowels("what a wonderful life")); // "wonderful"
+console.log(mostVowels("the quick brown fox jumps")); // "quick"
+console.log(mostVowels("")); // ""
+</code></pre>
+
+    <h2>Explanation:</h2>
+    <p>The function <code>mostVowels</code> works by first splitting the sentence into individual words. We then use a helper function <code>countVowels</code> to count the number of vowels in each word. As we iterate over the words, we track the word that has the highest number of vowels and return it at the end. If the input sentence is empty, we return an empty string.</p>
+
+    <h2>Test Cases:</h2>
+    <ul>
+        <li><code>mostVowels("what a wonderful life")</code> returns <strong>"wonderful"</strong> because it contains 3 vowels.</li>
+        <li><code>mostVowels("the quick brown fox jumps")</code> returns <strong>"quick"</strong> because it contains 2 vowels.</li>
+        <li><code>mostVowels("")</code> returns <strong>""</strong> because the input sentence is empty.</li>
+    </ul>
+
+</body>
+</html>
