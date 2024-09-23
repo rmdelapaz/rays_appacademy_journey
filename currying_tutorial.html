@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currying in JavaScript - A Beginner's Tutorial</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Understanding Currying in JavaScript</h1>
+    </header>
+    
+    <section>
+        <h2>Introduction to Currying</h2>
+        <p>Currying is a technique in JavaScript (and other programming languages) where a function doesn't take all its arguments at once. 
+        Instead, it takes them one by one, returning a new function for each argument. Currying can make functions more flexible, reusable, and modular.</p>
+    </section>
+
+    <section>
+        <h2>Breaking It Down: Sandwich Shop Analogy</h2>
+        <p>Imagine you're in a sandwich shop. Normally, you'd order your sandwich like this:</p>
+        <code>makeSandwich('bread', 'cheese', 'ham');</code>
+        <p>But in a curried sandwich shop, you'd order like this:</p>
+        <code>makeSandwichCurried('bread')('cheese')('ham');</code>
+        <p>Instead of giving all the details at once, you provide each step one by one.</p>
+    </section>
+
+    <section>
+        <h2>Technical Example: Regular vs. Curried Function</h2>
+        <h3>Regular Function</h3>
+        <pre>
+function add(a, b, c) {
+    return a + b + c;
+}
+console.log(add(1, 2, 3)); // Outputs: 6
+        </pre>
+        <h3>Curried Function</h3>
+        <pre>
+function curriedAdd(a) {
+    return function(b) {
+        return function(c) {
+            return a + b + c;
+        };
+    };
+}
+console.log(curriedAdd(1)(2)(3)); // Outputs: 6
+        </pre>
+        <p>Notice how the curried function takes each argument one at a time.</p>
+    </section>
+
+    <section>
+        <h2>Why Use Currying?</h2>
+        <p>Currying can make your code cleaner and more reusable. By breaking a function into smaller pieces, you can reuse parts of it in different contexts.</p>
+        <h3>Example: Customizing Functions</h3>
+        <p>Imagine you have a function to calculate tax based on location:</p>
+        <pre>
+function calculateTax(location, amount) {
+    if (location === 'CA') return amount * 0.0825;
+    if (location === 'TX') return amount * 0.0625;
+    return amount * 0.05;
+}
+        </pre>
+        <p>You could curry it to create different versions for different locations:</p>
+        <pre>
+function curriedCalculateTax(location) {
+    return function(amount) {
+        if (location === 'CA') return amount * 0.0825;
+        if (location === 'TX') return amount * 0.0625;
+        return amount * 0.05;
+    };
+}
+
+const calculateCaliforniaTax = curriedCalculateTax('CA');
+const calculateTexasTax = curriedCalculateTax('TX');
+console.log(calculateCaliforniaTax(100)); // Outputs: 8.25
+console.log(calculateTexasTax(100));      // Outputs: 6.25
+        </pre>
+        <p>Now you can reuse these specialized tax functions!</p>
+    </section>
+
+    <section>
+        <h2>Practical Use in Real World Applications</h2>
+        <p>Currying is especially useful in functional programming, where functions are treated like first-class objects. It's commonly used when you want to apply transformations to a specific part of the data pipeline in libraries like <strong>Lodash</strong> or <strong>Ramda</strong>.</p>
+        <h3>Example: Using Currying in a Data Processing Pipeline</h3>
+        <pre>
+// A function to filter, map, and reduce data step-by-step
+function processArray(filterFn) {
+    return function(mapFn) {
+        return function(reduceFn) {
+            return function(array) {
+                return array.filter(filterFn).map(mapFn).reduce(reduceFn);
+            };
+        };
+    };
+}
+
+const arrayProcessor = processArray(x => x > 5)(x => x * 2)((sum, x) => sum + x);
+console.log(arrayProcessor([3, 6, 9, 12])); // Outputs: 54
+        </pre>
+        <p>With currying, you break down complex processes into smaller, manageable steps.</p>
+    </section>
+
+    <section>
+        <h2>Related Topics to Explore</h2>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">Arrow Functions</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">Closures</a></li>
+            <li><a href="https://lodash.com/docs/4.17.15#curry">Lodash's Curry Method</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/Functional_programming">Functional Programming</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>Happy Coding!</p>
+    </footer>
+</body>
+</html>
