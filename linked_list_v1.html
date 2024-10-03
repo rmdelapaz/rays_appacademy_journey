@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Linked Lists: Creating and Using</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Understanding Linked Lists in JavaScript</h1>
+    </header>
+
+    <section>
+        <h2>Introduction to Linked Lists</h2>
+        <p>Linked lists are a data structure used to store elements in a linear order, similar to arrays. However, unlike arrays, linked lists are not stored in contiguous memory locations, making certain operations more efficient.</p>
+
+        <h3>Analogy: The Train Car Example</h3>
+        <p>Imagine a train made up of individual cars. Each car is connected to the next, but they aren’t all packed in one spot like items in a box (which is similar to an array). The train cars (nodes) are linked together by connectors (pointers). You can walk from one car to the next, but you can’t jump directly to any car like you could pick an item from a box. This is how linked lists work: each node holds data and a reference (pointer) to the next node in the sequence.</p>
+    </section>
+
+    <section>
+        <h2>Creating a Linked List</h2>
+        <p>In JavaScript, a linked list is made up of "nodes." Each node has two parts:</p>
+        <ul>
+            <li><strong>Value:</strong> The data held by the node.</li>
+            <li><strong>Next:</strong> A reference (or pointer) to the next node in the list.</li>
+        </ul>
+        <p>Here’s how to create a simple linked list in JavaScript:</p>
+
+        <h3>Step 1: Defining the Node</h3>
+        <p>First, we need a constructor to define a node:</p>
+        <pre>
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null; // Initially, the next node is null
+    }
+}
+        </pre>
+        <p><strong>Explanation:</strong> The <code>Node</code> class creates a node with a value and sets the <code>next</code> pointer to null because, at first, there is no other node connected.</p>
+
+        <h3>Step 2: Creating the Linked List</h3>
+        <p>Next, we define the linked list structure itself. This includes adding nodes and managing the head of the list (the first node).</p>
+        <pre>
+class LinkedList {
+    constructor() {
+        this.head = null; // The list starts empty
+    }
+
+    add(value) {
+        const newNode = new Node(value);
+
+        if (!this.head) {
+            this.head = newNode; // If the list is empty, the new node becomes the head
+        } else {
+            let current = this.head;
+
+            // Traverse the list until we find the last node
+            while (current.next) {
+                current = current.next;
+            }
+
+            // Point the last node's next to the new node
+            current.next = newNode;
+        }
+    }
+
+    print() {
+        let current = this.head;
+
+        while (current) {
+            console.log(current.value);
+            current = current.next;
+        }
+    }
+}
+
+const myList = new LinkedList();
+myList.add(10);
+myList.add(20);
+myList.add(30);
+myList.print(); // Output: 10 20 30
+        </pre>
+        <p><strong>Explanation:</strong> The <code>LinkedList</code> class has two main methods: <code>add()</code> to add new nodes to the end of the list, and <code>print()</code> to print the values of all the nodes in the list. When you add a new node, the list is traversed until the last node is found, and then the new node is added at the end.</p>
+
+        <h3>When to Use Linked Lists</h3>
+        <ul>
+            <li>When you need dynamic memory allocation (the list can grow or shrink easily).</li>
+            <li>When frequent insertions and deletions are required, especially at the beginning or middle of the list.</li>
+            <li>When you don’t need random access (linked lists do not support efficient access by index).</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Advanced Operations with Linked Lists</h2>
+        <p>Now that we’ve covered the basics, let’s explore some advanced operations that you can perform on linked lists, such as removing nodes and searching for values.</p>
+
+        <h3>Removing a Node</h3>
+        <pre>
+remove(value) {
+    if (!this.head) {
+        return;
+    }
+
+    // If the head is the node to be removed
+    if (this.head.value === value) {
+        this.head = this.head.next;
+        return;
+    }
+
+    let current = this.head;
+    let previous = null;
+
+    while (current) {
+        if (current.value === value) {
+            previous.next = current.next;
+            return;
+        }
+        previous = current;
+        current = current.next;
+    }
+}
+        </pre>
+        <p><strong>Explanation:</strong> The <code>remove()</code> method traverses the list to find the node with the given value. If the head is the node to be removed, it updates the head. Otherwise, it updates the previous node's <code>next</code> pointer to skip over the node being removed.</p>
+
+        <h3>Searching for a Value</h3>
+        <pre>
+search(value) {
+    let current = this.head;
+
+    while (current) {
+        if (current.value === value) {
+            return current;
+        }
+        current = current.next;
+    }
+
+    return null; // Value not found
+}
+        </pre>
+        <p><strong>Explanation:</strong> The <code>search()</code> method traverses the list, checking each node's value. If the value is found, the node is returned. If the value isn’t found, it returns <code>null</code>.</p>
+    </section>
+
+    <section>
+        <h2>Real-World Applications of Linked Lists</h2>
+        <p>Linked lists are often used in scenarios where memory needs to be efficiently managed or where constant insertions and deletions are required. Some real-world applications include:</p>
+        <ul>
+            <li><strong>Undo Functionality:</strong> Many text editors or software with an "undo" feature use a linked list to store states. Each change is a new node, and undoing means stepping back through the nodes.</li>
+            <li><strong>Implementing Queues and Stacks:</strong> Linked lists are often used to implement these data structures where efficient insertion and deletion from the ends are required.</li>
+            <li><strong>Browser History:</strong> When you navigate through your browsing history, the pages are stored in a linked list where each page points to the previous and next page.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Practice Problems</h2>
+        <p>Here are some exercises to practice your understanding of linked lists:</p>
+        <ol>
+            <li>Create a function that counts the number of nodes in a linked list.</li>
+            <li>Write a function to reverse a linked list.</li>
+            <li>Implement a function that checks whether a linked list contains a cycle (where a node’s <code>next</code> pointer points back to an earlier node).</li>
+        </ol>
+    </section>
+
+    <footer>
+        <p>Linked lists are a key data structure that can help you write efficient, scalable code. Keep practicing and exploring more advanced linked list concepts!</p>
+    </footer>
+</body>
+</html>
