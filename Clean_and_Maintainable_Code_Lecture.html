@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean and Maintainable Coding Objectives</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Clean and Maintainable Coding: Objectives and Best Practices</h1>
+    </header>
+
+    <section>
+        <h2>Introduction</h2>
+        <p>Writing clean and maintainable code is essential for software development. It ensures that your code is easy to understand, extend, and maintain. By following specific principles and best practices, you can create code that is not only efficient but also sustainable for long-term projects. This tutorial will cover the key objectives of clean and maintainable coding, with practical examples and real-world usage.</p>
+    </section>
+
+    <section>
+        <h2>Objectives</h2>
+        <p>By the end of this lesson, you should be able to perform each of the following:</p>
+        <ul>
+            <li>Export and import elements of code from one file to another, including code written by another programmer.</li>
+            <li>Write code that adheres to the DRY principle.</li>
+            <li>Utilize the DRY principle to improve code written by another programmer.</li>
+            <li>Construct classes and functions that adhere to the Single Responsibility Principle (SRP).</li>
+            <li>Identify violations of the SRP in code and refactor it to apply the principle.</li>
+            <li>Utilize an API to interact with functionality found in a library.</li>
+            <li>Write functions to abstract complex API commands into simpler-to-use tools.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Export and Import Code Between Files</h2>
+        <p>In JavaScript, especially in modular programming, it’s common to split your code into multiple files. This keeps code organized and modular. You can export functions, classes, or variables from one file and import them into another.</p>
+
+        <h3>Analogy: Importing Tools from a Toolbox</h3>
+        <p>Imagine you have a toolbox, and each tool is stored in a different compartment (file). When you need a tool (function or class), you simply take it out of the toolbox (import it) and use it in your project.</p>
+
+        <h3>Example</h3>
+        <pre>
+// math.js
+export function add(a, b) {
+    return a + b;
+}
+
+export function subtract(a, b) {
+    return a - b;
+}
+
+// app.js
+import { add, subtract } from './math.js';
+
+console.log(add(5, 3)); // Output: 8
+console.log(subtract(5, 3)); // Output: 2
+        </pre>
+        <p><strong>Why?</strong> Exporting and importing code helps keep your project modular and organized. Each file can focus on a specific functionality, making it easier to maintain and extend.</p>
+    </section>
+
+    <section>
+        <h2>Write Code that Adheres to the DRY Principle</h2>
+        <p>DRY stands for "Don't Repeat Yourself." The DRY principle encourages you to write reusable code and avoid duplicating logic. It helps prevent bugs and reduces the effort needed to maintain code.</p>
+
+        <h3>Metaphor: The Chef’s Recipe</h3>
+        <p>Imagine you’re a chef preparing multiple dishes. Instead of writing out the instructions for boiling water each time, you simply refer to a single recipe that covers boiling water. By reusing the same set of instructions, you avoid duplication.</p>
+
+        <h3>Example</h3>
+        <pre>
+// Without DRY
+function calculateRectangleArea(width, height) {
+    return width * height;
+}
+
+function calculateSquareArea(side) {
+    return side * side;
+}
+
+// With DRY
+function calculateArea(shape, dimension1, dimension2 = null) {
+    if (shape === 'rectangle') {
+        return dimension1 * dimension2;
+    } else if (shape === 'square') {
+        return dimension1 * dimension1;
+    }
+}
+        </pre>
+        <p><strong>Why?</strong> Writing DRY code ensures you only have to update logic in one place, reducing the likelihood of errors and making future maintenance easier.</p>
+    </section>
+
+    <section>
+        <h2>Single Responsibility Principle (SRP)</h2>
+        <p>The Single Responsibility Principle (SRP) states that every function or class should have one and only one reason to change. In other words, each component should only handle a specific piece of functionality.</p>
+
+        <h3>Analogy: The Specialist Worker</h3>
+        <p>Imagine you’re managing a team. You wouldn’t assign the same person to handle accounting, customer service, and product design. Instead, you’d hire specialists. Similarly, each function or class should have one clear responsibility.</p>
+
+        <h3>Example</h3>
+        <pre>
+// Violating SRP
+class User {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    saveToDatabase() {
+        // Database logic
+    }
+
+    sendEmail() {
+        // Email logic
+    }
+}
+
+// Refactored to follow SRP
+class User {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+class UserRepository {
+    save(user) {
+        // Save to database logic
+    }
+}
+
+class EmailService {
+    sendEmail(user) {
+        // Send email logic
+    }
+}
+        </pre>
+        <p><strong>Why?</strong> Following the SRP makes your code easier to understand, maintain, and test. If one part of your program changes, it won't affect unrelated parts.</p>
+    </section>
+
+    <section>
+        <h2>Utilizing APIs and Abstraction</h2>
+        <p>APIs (Application Programming Interfaces) allow you to interact with external libraries or services. Abstraction simplifies complex API commands, making them easier to use in your code.</p>
+
+        <h3>Metaphor: The Coffee Machine</h3>
+        <p>Think of using an API like using a coffee machine. You don’t need to know how the machine works internally (boiling water, grinding beans) to make coffee. You just press a button, and the coffee comes out. In the same way, APIs allow you to use complex functionality without knowing all the details.</p>
+
+        <h3>Example</h3>
+        <pre>
+// API interaction without abstraction
+fetch('https://api.example.com/data')
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+// Abstracted API interaction
+function getData() {
+    return fetch('https://api.example.com/data')
+        .then(response => response.json());
+}
+
+getData().then(data => console.log(data));
+        </pre>
+        <p><strong>Why?</strong> Abstraction hides the complexity of APIs and makes your code easier to use and modify. It also reduces repetition, adhering to the DRY principle.</p>
+    </section>
+
+    <section>
+        <h2>Practice Problems</h2>
+        <p>Try to apply the principles you’ve learned by solving these problems:</p>
+        <ol>
+            <li>Refactor a piece of code that violates the Single Responsibility Principle.</li>
+            <li>Write a function that interacts with an API, then refactor it to abstract the logic into a reusable function.</li>
+            <li>Identify repeated logic in your code and refactor it using the DRY principle.</li>
+        </ol>
+    </section>
+
+    <footer>
+        <p>Writing clean and maintainable code is essential for long-term project success. Keep practicing these principles and applying them in your projects!</p>
+    </footer>
+</body>
+</html>
